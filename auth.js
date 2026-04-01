@@ -12,8 +12,22 @@ async function sha256(message) {
     return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
 }
  
+// Injecte un style qui cache le contenu MAIS pas les éléments position:fixed
+function hideContent() {
+    const style = document.createElement("style");
+    style.id = "auth-hide";
+    style.textContent = "body > *:not(#login-overlay) { visibility: hidden !important; }";
+    document.head.appendChild(style);
+}
+ 
+function showContent() {
+    const style = document.getElementById("auth-hide");
+    if (style) style.remove();
+}
+ 
 function showLoginScreen() {
-    // Crée l'overlay
+    hideContent();
+ 
     const overlay = document.createElement("div");
     overlay.id = "login-overlay";
     overlay.style.cssText = `
@@ -21,6 +35,7 @@ function showLoginScreen() {
         background: #1a1a2e;
         display: flex; align-items: center; justify-content: center;
         z-index: 9999; font-family: sans-serif;
+        visibility: visible !important;
     `;
  
     overlay.innerHTML = `
@@ -43,36 +58,33 @@ function showLoginScreen() {
                         font-size:0.95em; outline:none;
                     "
                 />
-                <button
-                    id="pwd-btn"
-                    style="
-                        background:#1a1a2e; color:white; border:none;
-                        padding:11px 18px; border-radius:8px; cursor:pointer;
-                        font-weight:600; font-size:0.88em;
-                    "
-                >Accéder</button>
+                <button id="pwd-btn" style="
+                    background:#1a1a2e; color:white; border:none;
+                    padding:11px 18px; border-radius:8px; cursor:pointer;
+                    font-weight:600; font-size:0.88em;
+                ">Accéder</button>
             </div>
             <div id="login-error" style="color:#e63946; font-size:0.82em; margin-top:12px; min-height:18px;"></div>
         </div>
     `;
  
     document.body.appendChild(overlay);
-    document.getElementById("pwd-input").focus();
+    setTimeout(() => document.getElementById("pwd-input").focus(), 100);
  
     async function tryLogin() {
         const input = document.getElementById("pwd-input").value;
         const hash  = await sha256(input);
- 
         if (hash === PASSWORD_HASH) {
             sessionStorage.setItem(SESSION_KEY, PASSWORD_HASH);
             overlay.remove();
-            document.body.style.visibility = "visible";
+            showContent();
         } else {
             document.getElementById("login-error").textContent = "Mot de passe incorrect.";
             document.getElementById("pwd-input").value = "";
             document.getElementById("pwd-input").focus();
             setTimeout(() => {
-                document.getElementById("login-error").textContent = "";
+                const err = document.getElementById("login-error");
+                if (err) err.textContent = "";
             }, 2500);
         }
     }
@@ -84,11 +96,10 @@ function showLoginScreen() {
 }
  
 // ── Point d'entrée ──
-window.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", () => {
     if (isAuthenticated()) {
-        document.body.style.visibility = "visible";
+        showContent();
     } else {
-        document.body.style.visibility = "hidden";
         showLoginScreen();
     }
 });

@@ -108,8 +108,12 @@ function showLoginScreen() {
  
 // Point d'entrée
 if (isAuthenticated()) {
-    document.body.style.visibility = "visible";
+    document.addEventListener("DOMContentLoaded", () => {
+        document.body.style.visibility = "visible";
+    });
 } else {
-    document.body.style.visibility = "hidden";
-    document.addEventListener("DOMContentLoaded", showLoginScreen);
+    document.addEventListener("DOMContentLoaded", () => {
+        document.body.style.visibility = "hidden";
+        showLoginScreen();
+    });
 }

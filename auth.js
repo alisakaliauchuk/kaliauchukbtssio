@@ -13,107 +13,82 @@ async function sha256(message) {
 }
  
 function showLoginScreen() {
-    document.body.style.visibility = "hidden";
- 
+    // Crée l'overlay
     const overlay = document.createElement("div");
     overlay.id = "login-overlay";
-    overlay.innerHTML = `
-        <div id="login-box">
-            <h2>Portfolio</h2>
-            <p>Alisa Kaliauchuk — BTS SIO SLAM</p>
-            <div id="login-field">
-                <input type="password" id="pwd-input" placeholder="Mot de passe" autocomplete="current-password" />
-                <button id="pwd-btn">Accéder</button>
-            </div>
-            <span id="login-error"></span>
-        </div>
-    `;
- 
     overlay.style.cssText = `
         position: fixed; inset: 0;
         background: #1a1a2e;
         display: flex; align-items: center; justify-content: center;
-        z-index: 9999; font-family: 'DM Sans', sans-serif;
-        opacity: 0; transition: opacity 0.3s;
+        z-index: 9999; font-family: sans-serif;
+    `;
+ 
+    overlay.innerHTML = `
+        <div style="
+            background: #faf9f7; padding: 44px 40px 36px;
+            border-radius: 14px; text-align: center;
+            width: 100%; max-width: 360px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        ">
+            <div style="font-size:1.6em; font-weight:700; color:#1a1a2e; margin-bottom:6px;">Portfolio</div>
+            <div style="color:#888; font-size:0.88em; margin-bottom:28px;">Alisa Kaliauchuk — BTS SIO SLAM</div>
+            <div style="display:flex; gap:8px;">
+                <input
+                    id="pwd-input"
+                    type="password"
+                    placeholder="Mot de passe"
+                    style="
+                        flex:1; padding:11px 14px;
+                        border:1.5px solid #ddd8d0; border-radius:8px;
+                        font-size:0.95em; outline:none;
+                    "
+                />
+                <button
+                    id="pwd-btn"
+                    style="
+                        background:#1a1a2e; color:white; border:none;
+                        padding:11px 18px; border-radius:8px; cursor:pointer;
+                        font-weight:600; font-size:0.88em;
+                    "
+                >Accéder</button>
+            </div>
+            <div id="login-error" style="color:#e63946; font-size:0.82em; margin-top:12px; min-height:18px;"></div>
+        </div>
     `;
  
     document.body.appendChild(overlay);
-    requestAnimationFrame(() => overlay.style.opacity = 1);
- 
-    overlay.querySelector("#login-box").style.cssText = `
-        background: #faf9f7; padding: 44px 40px 36px;
-        border-radius: 14px; text-align: center;
-        width: 100%; max-width: 360px;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    `;
-    overlay.querySelector("h2").style.cssText = `
-        font-family: 'Syne', sans-serif; font-size: 1.6em;
-        color: #1a1a2e; margin-bottom: 6px;
-    `;
-    overlay.querySelector("p").style.cssText = `
-        color: #888; font-size: 0.88em; margin-bottom: 28px;
-    `;
-    overlay.querySelector("#login-field").style.cssText = `
-        display: flex; gap: 8px;
-    `;
-    overlay.querySelector("#pwd-input").style.cssText = `
-        flex: 1; padding: 11px 14px;
-        border: 1.5px solid #ddd8d0; border-radius: 8px;
-        font-size: 0.95em; outline: none; font-family: inherit;
-    `;
-    overlay.querySelector("#pwd-btn").style.cssText = `
-        background: #1a1a2e; color: white; border: none;
-        padding: 11px 18px; border-radius: 8px; cursor: pointer;
-        font-family: 'Syne', sans-serif; font-weight: 600;
-        font-size: 0.88em; transition: background 0.2s;
-    `;
-    overlay.querySelector("#login-error").style.cssText = `
-        display: block; color: #e63946; font-size: 0.82em;
-        margin-top: 12px; min-height: 18px;
-    `;
- 
-    setTimeout(() => overlay.querySelector("#pwd-input").focus(), 100);
+    document.getElementById("pwd-input").focus();
  
     async function tryLogin() {
-        const input = overlay.querySelector("#pwd-input").value;
+        const input = document.getElementById("pwd-input").value;
         const hash  = await sha256(input);
+ 
         if (hash === PASSWORD_HASH) {
             sessionStorage.setItem(SESSION_KEY, PASSWORD_HASH);
-            overlay.style.opacity = 0;
-            setTimeout(() => {
-                overlay.remove();
-                document.body.style.visibility = "visible";
-            }, 300);
+            overlay.remove();
+            document.body.style.visibility = "visible";
         } else {
-            const err = overlay.querySelector("#login-error");
-            const inp = overlay.querySelector("#pwd-input");
-            err.textContent = "Mot de passe incorrect.";
-            inp.style.borderColor = "#e63946";
-            inp.value = "";
-            inp.focus();
+            document.getElementById("login-error").textContent = "Mot de passe incorrect.";
+            document.getElementById("pwd-input").value = "";
+            document.getElementById("pwd-input").focus();
             setTimeout(() => {
-                err.textContent = "";
-                inp.style.borderColor = "#ddd8d0";
+                document.getElementById("login-error").textContent = "";
             }, 2500);
         }
     }
  
-    overlay.querySelector("#pwd-btn").addEventListener("click", tryLogin);
-    overlay.querySelector("#pwd-input").addEventListener("keydown", e => {
+    document.getElementById("pwd-btn").addEventListener("click", tryLogin);
+    document.getElementById("pwd-input").addEventListener("keydown", e => {
         if (e.key === "Enter") tryLogin();
     });
-    overlay.querySelector("#pwd-btn").addEventListener("mouseenter", function() { this.style.background = "#e63946"; });
-    overlay.querySelector("#pwd-btn").addEventListener("mouseleave", function() { this.style.background = "#1a1a2e"; });
 }
  
-// Point d'entrée
-if (isAuthenticated()) {
-    document.addEventListener("DOMContentLoaded", () => {
+// ── Point d'entrée ──
+window.addEventListener("load", () => {
+    if (isAuthenticated()) {
         document.body.style.visibility = "visible";
-    });
-} else {
-    document.addEventListener("DOMContentLoaded", () => {
+    } else {
         document.body.style.visibility = "hidden";
         showLoginScreen();
-    });
-}
+    }
+});

@@ -457,6 +457,20 @@ footer {
 }
 
 /* ouvrir CV */
+.btn-cv {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9em;
+    transition: background 0.2s, transform 0.15s;
+}
 .btn-cv .btn-grille {
     display: inline-flex;
     align-items: center;

@@ -39,14 +39,24 @@ const projets = [
         titre: "Projet Série",
         description: "Projet site web avec des séries qui contient leurs descriptions en détails.",
         technologies: ["PHP", "CSS", "PSQL"],
-        zip: "https://github.com/alisakaliauchuk/kaliauchukbtssio/raw/main/archives/SERIE.zip"
+        zip: "https://github.com/alisakaliauchuk/kaliauchukbtssio/raw/main/archives/SERIE.zip",
+        page: "projet-serie.html"
     },
     {
         tag: "Application Web",
         titre: "Projet Gestion de port 2C",
         description: "Projet site web avec des factures.",
         technologies: ["PHP", "CSS", "PSQL"],
-        zip: "https://github.com/alisakaliauchuk/kaliauchukbtssio/raw/main/archives/2C.zip"
+        zip: "https://github.com/alisakaliauchuk/kaliauchukbtssio/raw/main/archives/2C.zip",
+        page: "projet-2c.html"
+    },
+    {
+        tag: "Logiciel C++",
+        titre: "Projet LYCEE C++",
+        description: "Projet C++ avec des tests unitaires.",
+        technologies: ["C++", "PSQL", "Qt Creator"],
+        zip: "https://github.com/alisakaliauchuk/kaliauchukbtssio/raw/main/archives/LYCEEC++.zip",
+        page: "projet-lyceec++.html"
     },
 ];
 
@@ -55,7 +65,7 @@ const grid = document.getElementById('projets-grid');
 projets.forEach(p => {
     const badges = p.technologies.map(t => `<span class="tech-badge">${t}</span>`).join('');
     grid.innerHTML += `
-        <div class="project-card">
+        <div class="project-card" onclick="location.href='${p.page}'" style="cursor:pointer;">
             <div class="card-banner"></div>
             <div class="card-body">
                 <span class="card-tag">${p.tag}</span>

@@ -30,6 +30,19 @@
     </section>
 </section>
 
+<section class="section">
+    <h2>Réalisations professionnelles</h2>
+    <section class="projects-section">
+        <div class="projects-grid" id="projets-pro-grid"></div>
+    </section>
+</section>
+
+<section class="section">
+    <h2>Réalisations personnelles</h2>
+    <section class="projects-section">
+        <div class="projects-grid" id="projets-perso-grid"></div>
+    </section>
+</section>
 
 <footer>
     <p>©2026 - Alisa Kaliauchuk | Portfolio BTS SIO</p>
@@ -97,7 +110,7 @@ const projets = [
         tag: "Application Web",
         titre: "Projet Cybersécurité",
         description: "Projet site web avec un jeu de cybersécurité PokéCyber.",
-        technologies: ["PHP", "HTML", "CSS", "PSQL"],
+        technologies: ["PHP", "HTML", "CSS", "JS", "PSQL"],
         zip: "https://github.com/alisakaliauchuk/kaliauchukbtssio/raw/main/archives/pokecyber.zip",
         page: "projet-pokecyber.html"
     },
@@ -116,6 +129,28 @@ const projets = [
         technologies: ["PHP", "HTML", "CSS", "JS", "GitHub"],
         zip: "https://github.com/alisakaliauchuk/kaliauchukbtssio/raw/main/archives/PORTFOLIO.zip",
         page: "projet-portfolio.html"
+    },
+];
+
+const projetsPro = [
+    {
+        tag: "Stage",
+        titre: "Nom du projet stage",
+        description: "Description...",
+        technologies: ["PHP", "MySQL"],
+        zip: "https://github.com/...",
+        page: "projet-stage.html"
+    },
+];
+
+const projetsPerso = [
+    {
+        tag: "Jeu",
+        titre: "Mon jeu",
+        description: "Description de ton jeu...",
+        technologies: ["Python"],
+        zip: "https://github.com/...",
+        page: "projet-jeu.html"
     },
 ];
 
@@ -155,6 +190,10 @@ for (let i = 0; i < placeholders; i++) {
             </div>
         </div>`;
 }
+
+genererGrille(projets, 'projets-grid');
+genererGrille(projetsPro, 'projets-pro-grid');
+genererGrille(projetsPerso, 'projets-perso-grid');
 </script>
 
 </body>

@@ -156,27 +156,30 @@ const projetsPerso = [
 
 const grid = document.getElementById('projets-grid');
 
-projets.forEach(p => {
-    const badges = p.technologies.map(t => `<span class="tech-badge">${t}</span>`).join('');
-    grid.innerHTML += `
-        <div class="project-card" onclick="location.href='${p.page}'" style="cursor:pointer;">
-            <div class="card-banner"></div>
-            <div class="card-body">
-                <span class="card-tag">${p.tag}</span>
-                <h3 class="card-title">${p.titre}</h3>
-                <p class="card-desc">${p.description}</p>
-                <div class="card-tech">${badges}</div>
-            </div>
-            <div class="card-footer">
-                <a class="btn-download" href="${p.zip}" download>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4"/>
-                    </svg>
-                    Télécharger
-                </a>
-            </div>
-        </div>`;
-});
+function genererGrille(projets, gridId) {
+    const grid = document.getElementById(gridId);
+    projets.forEach(p => {
+        const badges = p.technologies.map(t => `<span class="tech-badge">${t}</span>`).join('');
+        grid.innerHTML += `
+            <div class="project-card" onclick="location.href='${p.page}'" style="cursor:pointer;">
+                <div class="card-banner"></div>
+                <div class="card-body">
+                    <span class="card-tag">${p.tag}</span>
+                    <h3 class="card-title">${p.titre}</h3>
+                    <p class="card-desc">${p.description}</p>
+                    <div class="card-tech">${badges}</div>
+                </div>
+                <div class="card-footer">
+                    <a class="btn-download" href="${p.zip}" download>
+                        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M12 4v12m0 0l-4-4m4 4l4-4"/>
+                        </svg>
+                        Télécharger
+                    </a>
+                </div>
+            </div>`;
+    });
+}
 
 const placeholders = Math.max(0, 3 - projets.length);
 for (let i = 0; i < placeholders; i++) {

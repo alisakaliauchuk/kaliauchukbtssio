@@ -455,3 +455,23 @@ footer {
     .projet-content { padding: 20px 16px 48px; }
     .projet-block { padding: 18px; }
 }
+
+/* ouvrir CV */
+.btn-cv {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9em;
+    transition: background 0.2s, transform 0.15s;
+}
+.btn-cv:hover {
+    background: var(--dark);
+    transform: scale(1.03);
+}

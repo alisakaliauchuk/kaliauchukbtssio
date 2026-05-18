@@ -457,7 +457,7 @@ footer {
 }
 
 /* ouvrir CV */
-.btn-cv {
+.btn-cv .btn-grille {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -472,6 +472,10 @@ footer {
     transition: background 0.2s, transform 0.15s;
 }
 .btn-cv:hover {
+    background: var(--dark);
+    transform: scale(1.03);
+}
+.btn-grille:hover {
     background: var(--dark);
     transform: scale(1.03);
 }

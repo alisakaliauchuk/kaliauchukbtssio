@@ -456,7 +456,7 @@ footer {
     .projet-block { padding: 18px; }
 }
 
-/* ouvrir CV */
+
 .btn-cv {
     display: inline-flex;
     align-items: center;
@@ -471,7 +471,7 @@ footer {
     font-size: 0.9em;
     transition: background 0.2s, transform 0.15s;
 }
-.btn-cv .btn-grille {
+.btn-grille {
     display: inline-flex;
     align-items: center;
     gap: 8px;

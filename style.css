@@ -493,3 +493,14 @@ footer {
     background: var(--dark);
     transform: scale(1.03);
 }
+
+.hero ul {
+    padding-left: 24px;
+    margin-top: 10px;
+    list-style: disc;
+}
+.hero ul li {
+    font-size: 0.95em;
+    line-height: 1.8;
+    color: var(--muted);
+}
